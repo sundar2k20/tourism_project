@@ -13,9 +13,13 @@ model_path = hf_hub_download(
     filename=file_name
 )
 
-# Load the trained model
-model = joblib.load(model_path)
-
+try:
+    # Load the trained model
+    model = joblib.load(model_path)
+except Exception as e:
+    st.error(f"Failed to load model: {e}")
+    st.stop()
+    
 # Streamlit UI
 st.title("MLOPS – Customer Package Purchase Prediction App")
 st.write(
