@@ -1,5 +1,6 @@
-# for data manipulation
+
 import pandas as pd
+from huggingface_hub import hf_hub_download
 import sklearn
 # for creating a folder
 import os
@@ -8,16 +9,33 @@ from sklearn.model_selection import train_test_split
 # for hugging face space authentication to upload files
 from huggingface_hub import login, HfApi
 
+
+
+# Define the Hugging Face repository ID and the filename
+repo_id = "sundar2k20/tourism_project"
+filename = "tourism.csv"
+
+data_path = hf_hub_download(repo_id=repo_id, filename=filename, repo_type="dataset")
+
+
+# Download the file from Hugging Face Hub
+
 # Define constants for the dataset and output paths
 api = HfApi(token=os.getenv("HF_TOKEN"))
-DATASET_PATH = "hf://datasets/AnkushWaghmare/Tourism-Project-dataset/tourism.csv"
-bank_dataset = pd.read_csv(DATASET_PATH)
+# Load the dataset into a pandas DataFrame
+df = pd.read_csv(data_path)
 print("Dataset loaded successfully.")
+
+# Fix gender values
+df.replace("Fe Male", "Female", inplace = True)
 
 # Define the target variable for the classification task
 target = 'ProdTaken'
 
-# List of numerical features in the dataset
+
+print("Columns removed successfully.")
+
+# List of numerical features in the dataset to be used
 numeric_features = [
     'Age',     # Customer's age
     'CityTier', # The city category based on development, population, and living standards (Tier 1 > Tier 2 > Tier 3)
@@ -31,7 +49,7 @@ numeric_features = [
     'DurationOfPitch' # Duration of the sales pitch delivered to the customer
 ]
 
-# List of categorical features in the dataset
+# List of categorical features in the dataset to be used
 categorical_features = [
     'TypeofContact', # The method by which the customer was contacted (Company Invited or Self Inquiry)
     'Occupation', # Customer's occupation (e.g., Salaried, Freelancer)
@@ -44,10 +62,10 @@ categorical_features = [
 ]
 
 # Define predictor matrix (X) using selected numeric and categorical features
-X = bank_dataset[numeric_features + categorical_features]
+X = df[numeric_features + categorical_features]
 
 # Define target variable
-y = bank_dataset[target]
+y = df[target]
 
 
 # Split dataset into train and test
@@ -70,6 +88,6 @@ for file_path in files:
     api.upload_file(
         path_or_fileobj=file_path,
         path_in_repo=file_path.split("/")[-1],  # just the filename
-        repo_id="AnkushWaghmare/Tourism-Project-Dataset",
-        repo_type="dataset",
+        repo_id=repo_id,
+        repo_type="dataset"
     )
