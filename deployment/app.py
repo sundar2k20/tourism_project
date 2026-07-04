@@ -1,12 +1,16 @@
+%%writefile tourism_project/deployment/app.py
 import streamlit as st
 import pandas as pd
 from huggingface_hub import hf_hub_download
 import joblib
 
+repo_id = "sundar2k20/tourism_project_model"
+file_name = "best_tourism_model_v1.joblib"
+
 # Download the model from Hugging Face Hub
 model_path = hf_hub_download(
-    repo_id="AnkushWaghmare/Tourism-Project-model",
-    filename="best_Tourism-Project_model_v1.joblib"
+    repo_id=repo_id,
+    filename=file_name
 )
 
 # Load the trained model
