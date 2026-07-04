@@ -1,10 +1,12 @@
+
 from huggingface_hub.utils import RepositoryNotFoundError, HfHubHTTPError
 from huggingface_hub import HfApi, create_repo
 import os
 
 
-repo_id = "AnkushWaghmare/Tourism-Project-Dataset"
+repo_id = "sundar2k20/tourism_project"
 repo_type = "dataset"
+
 
 # Initialize API client
 api = HfApi(token=os.getenv("HF_TOKEN"))
