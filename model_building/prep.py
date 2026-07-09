@@ -31,6 +31,11 @@ df.replace("Fe Male", "Female", inplace = True)
 # Remove column Unnamed: 0
 df.drop("Unnamed: 0", axis=1, inplace=True)
 
+# Merge similar categories
+df['MaritalStatus'] = df['MaritalStatus'].replace({
+    'Unmarried': 'Single'
+})
+
 # Define the target variable for the classification task
 target = 'ProdTaken'
 
