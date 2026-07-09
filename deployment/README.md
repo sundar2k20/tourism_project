@@ -1,5 +1,5 @@
 ---
-title: Tourism Project - Package Purchase Prediction
+title: Tourism Project - Package Purchase Prediction - V1
 emoji: 🌍
 colorFrom: blue
 colorTo: green
