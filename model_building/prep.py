@@ -72,8 +72,6 @@ X = df[numeric_features + categorical_features]
 # Define target variable
 y = df[target]
 
-
-# Split dataset into train and test
 # Split the dataset into training and test sets
 Xtrain, Xtest, ytrain, ytest = train_test_split(
     X, y,              # Predictors (X) and target variable (y)
